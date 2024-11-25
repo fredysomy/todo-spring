@@ -24,4 +24,21 @@ public class TodoService {
         return todoRepository.findById(id).orElse(null);
     }
 
+    public void deleteTodoById(Long id) {
+        todoRepository.deleteById(id);
+    }
+
+    public Todo updateTodoById(Long id, Todo todo) {
+        Todo todoToUpdate = todoRepository.findById(id).orElse(null);
+        if (todoToUpdate == null) {
+            return null;
+        }
+        else {
+            todoToUpdate.setTitle(todo.getTitle() != null ? todo.getTitle() : todoToUpdate.getTitle());
+            todoToUpdate.setDescription(todo.getDescription() != null ? todo.getDescription() : todoToUpdate.getDescription());
+            todoToUpdate.setCompleted(todo.isCompleted());
+            return todoRepository.save(todoToUpdate);
+        }
+    }
+
 }
